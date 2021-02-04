@@ -1,0 +1,34 @@
+.MovieList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.MovieList li {
+  align-items: center;
+  background: #fff;
+  border-left: 5px solid #1897f9;
+  border-radius: 2px;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.MovieList .delete {
+  background: none;
+  border-radius: 100%;
+  border: 0;
+  cursor: pointer;
+  height: 25px;
+  outline: none;
+  padding: 5px;
+  width: 25px;
+}
+
+.MovieList .delete img {
+  width: 100%;
+}
+
+.MovieList .delete:hover {
+  background: #f0f0f0;
+}

@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  back-end: 
+    build: ./backend
+    ports: 
+      - 3001:3001
+  front-end:
+    build: ./frontend
+    # container_name: vidly_app
+    ports:
+      - 3000:3000
+    depends_on: 
+      - "back-end"
+    # volumes:
+    #   - .:/app
+  # db:
+  #   image: "mongo:3-xenial"
+  #   container_name: vidly_db
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - vidly:/data/db
+# volumes:
+#   vidly:
