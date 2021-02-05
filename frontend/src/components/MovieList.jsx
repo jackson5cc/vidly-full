@@ -7,7 +7,8 @@ function MovieList() {
   const [movies, setMovies] = useState([]);
 
   const apiUrl = process.env.API_URL || "http://localhost:3001";
-  console.log("DEBUG: ", apiUrl);
+  console.log("ENV:", process.env);
+  console.debug("DEBUG:", apiUrl);
 
   useEffect(() => {
     (async function () {
