@@ -6,7 +6,7 @@ import "./MovieList.css";
 function MovieList() {
   const [movies, setMovies] = useState([]);
 
-  const apiUrl = process.env.API_URL || "http://localhost:3001";
+  const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3001";
   console.log("ENV:", process.env);
   console.debug("DEBUG:", apiUrl);
 
