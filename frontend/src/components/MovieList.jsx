@@ -6,10 +6,13 @@ import "./MovieList.css";
 function MovieList() {
   const [movies, setMovies] = useState([]);
 
+  const apiUrl = process.env.API_URL || "http://localhost:3001";
+  console.log("DEBUG: ", apiUrl);
+
   useEffect(() => {
     (async function () {
       try {
-        const { data } = await axios.get("http://localhost:3001/movies");
+        const { data } = await axios.get(apiUrl + "/movies");
         setMovies(data);
       } catch (error) {
         console.error(error);
