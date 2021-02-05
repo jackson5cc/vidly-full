@@ -1,4 +1,4 @@
-docker build -t codecast/vidly-frontend frontend
-docker push codecast/vidly-frontend
-docker build -t codecast/vidly-backend backend
-docker push codecast/vidly-backend
+docker build -t codecast/vidly-frontend:latest frontend
+docker push codecast/vidly-frontend:latest
+docker build -t codecast/vidly-backend:latest backend
+docker push codecast/vidly-backend:latest
