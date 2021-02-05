@@ -1,16 +1,16 @@
 version: "3.9"
 services:
-  back-end: 
+  backend: 
     build: ./backend
     ports: 
       - 3001:3001
-  front-end:
+  frontend:
     build: ./frontend
     # container_name: vidly_app
     ports:
       - 3000:3000
     depends_on: 
-      - "back-end"
+      - "backend"
     # volumes:
     #   - .:/app
   # db:
