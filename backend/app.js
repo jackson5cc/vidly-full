@@ -4,6 +4,7 @@ const cors = require("cors");
 const Movie = require("./models/movie");
 const config = require("./config/" + (process.env.NODE_ENV || "development"));
 console.log("config", config);
+console.log("env", process.env);
 
 const app = express();
 app.use(cors());
