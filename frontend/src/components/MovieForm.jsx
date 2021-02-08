@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Input from "./Input";
 
 function MovieForm({ onAddMovie }) {
   const [title, setTitle] = useState("");
@@ -7,15 +8,17 @@ function MovieForm({ onAddMovie }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!title) return;
+
     onAddMovie(title);
     setTitle("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
+      <Input
         onChange={handleChange}
-        className="form-control"
         placeholder="Add a new movie..."
         type="text"
         value={title}
