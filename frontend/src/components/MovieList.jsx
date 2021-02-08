@@ -22,7 +22,10 @@ function MovieList() {
   const handleAddMovie = async (title) => {
     try {
       const movie = { title };
+      setMovies([...movies, movie]);
+
       const { data: savedMovie } = await api.create(moviesEndpoint, movie);
+
       setMovies([...movies, savedMovie]);
     } catch (error) {
       console.error(error);
@@ -31,8 +34,8 @@ function MovieList() {
 
   const handleDeleteMovie = async (movie) => {
     try {
-      await api.remove(moviesEndpoint + "/" + movie._id);
       setMovies(movies.filter((m) => m !== movie));
+      await api.remove(moviesEndpoint + "/" + movie._id);
     } catch (error) {
       console.error(error);
     }
