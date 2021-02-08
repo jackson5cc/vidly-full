@@ -1,24 +1,28 @@
 version: "3.9"
 services:
+  db:
+    image: "mongo:4.0-xenial"
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
   backend: 
+    depends_on: 
+      - "db"
     build: ./backend
     ports: 
       - 3001:3001
+    volumes:
+      - ./backend:/app
+    entrypoint: npm start
   frontend:
-    build: ./frontend
-    # container_name: vidly_app
-    ports:
-      - 3000:3000
     depends_on: 
       - "backend"
-    # volumes:
-    #   - .:/app
-  # db:
-  #   image: "mongo:3-xenial"
-  #   container_name: vidly_db
-  #   ports:
-  #     - 27017:27017
-  #   volumes:
-  #     - vidly:/data/db
-# volumes:
-#   vidly:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+    entrypoint: yarn start 
+volumes:
+  vidly:

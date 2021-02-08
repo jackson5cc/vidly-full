@@ -1,14 +1,7 @@
-# Stage 1: The Build Process 
 FROM node:15-alpine3.10 AS build-stage
-ENV REACT_APP_API_URL=https://vidly-backend-service-4heuco6clq-uw.a.run.app
 WORKDIR /app
 COPY package*.json yarn.lock ./
 RUN yarn 
-COPY . ./ 
-RUN yarn build 
-
-# Stage 2: The Prouction Environment 
-FROM nginx:1.12-alpine
-COPY --from=build-stage /app/build/ /usr/share/nginx/html
-EXPOSE 80 
-CMD ["nginx", "-g", "daemon off;"]
+COPY . ./
+EXPOSE 3000 
+ENTRYPOINT [ "yarn", "start" ]

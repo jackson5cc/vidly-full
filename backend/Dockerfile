@@ -5,4 +5,4 @@ RUN npm install --only=production
 COPY . . 
 # I forgot to expose this. What's the result? 
 EXPOSE 3001 
-CMD [ "node", "app.js" ]
+ENTRYPOINT [ "node", "app.js" ]

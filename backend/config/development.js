@@ -1,5 +1,5 @@
-module.exports = { 
-  db: { 
-    uri: "mongodb://db/vidly"
-  }
-}
+module.exports = {
+  db: {
+    uri: "mongodb://db/vidly",
+  },
+};

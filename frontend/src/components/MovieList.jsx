@@ -1,39 +1,50 @@
 import React, { useState, useEffect } from "react";
-import x from "../services/movie";
-import axios from "axios";
+import Movie from "./Movie";
+import MovieForm from "./MovieForm";
+import api from "../services/api";
 import "./MovieList.css";
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
+  const moviesEndpoint = "/movies";
 
-  const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3001";
-  console.log("ENV:", process.env);
-  console.debug("DEBUG:", apiUrl);
+  const fetchMovies = async () => {
+    try {
+      const { data } = await api.get(moviesEndpoint);
+      setMovies(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  useEffect(() => {
-    (async function () {
-      try {
-        const { data } = await axios.get(apiUrl + "/movies");
-        setMovies(data);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, []);
+  useEffect(() => fetchMovies(), []);
 
-  const handleDelete = (movie) => {
-    setMovies(movies.filter((m) => m !== movie));
+  const handleAddMovie = async (title) => {
+    try {
+      const movie = { title };
+      const { data: savedMovie } = await api.create(moviesEndpoint, movie);
+      setMovies([...movies, savedMovie]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteMovie = async (movie) => {
+    try {
+      await api.remove(moviesEndpoint + "/" + movie._id);
+      setMovies(movies.filter((m) => m !== movie));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
+      <MovieForm onAddMovie={handleAddMovie} />
       <ul className="MovieList">
         {movies.map((movie) => (
           <li key={movie._id}>
-            {movie.title}
-            <button className="delete" onClick={() => handleDelete(movie)}>
-              <img src="/images/delete.svg" alt="Delete movie" />
-            </button>
+            <Movie movie={movie} onDeleteMovie={handleDeleteMovie} />
           </li>
         ))}
       </ul>
