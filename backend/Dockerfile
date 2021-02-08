@@ -1,6 +1,4 @@
 FROM node:15-alpine3.10
-ARG NODE_ENV=development 
-ENV NODE_ENV=${NODE_ENV}
 WORKDIR /app
 COPY package.json . 
 RUN npm install --only=production
