@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const Movie = require("./models/movie");
 const config = require("./config/" + (process.env.NODE_ENV || "development"));
+console.log("config", config);
 
 const app = express();
 app.use(cors());
