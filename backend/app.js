@@ -14,7 +14,7 @@ mongoose.connect(config.dbUri, {
   useNewUrlParser: true,
 });
 const db = mongoose.connection;
-db.on("connected", () => console.log("Connected to MongoDB: " + config.db.uri));
+db.on("connected", () => console.log("Connected to MongoDB: " + config.dbUri));
 db.on("error", console.log);
 
 app.get("/", (req, res) => {
