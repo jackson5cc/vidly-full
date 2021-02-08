@@ -1,8 +1,3 @@
 module.exports = {
-  db: {
-    uri:
-      "mongodb+srv://vidly:" +
-      process.env.MONGODB_PASSWORD +
-      "@cluster0.oyurd.mongodb.net/vidly?retryWrites=true&w=majority",
-  },
+  dbUri: `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.oyurd.mongodb.net/${process.env.MONGODB_DB}?retryWrites=true&w=majority`,
 };

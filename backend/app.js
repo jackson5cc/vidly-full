@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Movie = require("./models/movie");
-console.log("env", process.env);
 const config = require("./config/" + (process.env.NODE_ENV || "development"));
 console.log("config", config);
 
@@ -10,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(config.db.uri, {
+mongoose.connect(config.dbUri, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
