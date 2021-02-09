@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "db:up": "migrate-mongo up",
+    "start": "npm run db:up && nodemon app.js",
+    "start:prod": "npm run db:up && node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +19,7 @@
     "mongoose": "^5.11.13"
   },
   "devDependencies": {
+    "migrate-mongo": "^8.1.4",
     "nodemon": "^2.0.7"
   }
 }
