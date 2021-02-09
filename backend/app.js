@@ -2,19 +2,21 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Movie = require("./models/movie");
-const config = require("./config/" + (process.env.NODE_ENV || "development"));
+const config = require("config");
 console.log("config", config);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(config.dbUri, {
+mongoose.connect(config.get("dbUri"), {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
 const db = mongoose.connection;
-db.on("connected", () => console.log("Connected to MongoDB: " + config.dbUri));
+db.on("connected", () =>
+  console.log("Connected to MongoDB: " + config.get("dbUri"))
+);
 db.on("error", console.log);
 
 app.get("/", (req, res) => {
