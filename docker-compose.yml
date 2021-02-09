@@ -8,16 +8,16 @@ services:
       - vidly:/data/db
   backend: 
     depends_on: 
-      - "db"
+      - db
     build: ./backend
     ports: 
       - 3001:3001
     volumes:
       - ./backend:/app
-    entrypoint: npm start
+    entrypoint: npm start 
   frontend:
     depends_on: 
-      - "backend"
+      - backend
     build: ./frontend
     ports:
       - 3000:3000
