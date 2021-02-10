@@ -19,11 +19,11 @@ db.on("connected", () =>
 );
 db.on("error", console.log);
 
-app.get("/", (req, res) => {
-  res.send("<h1>App is running!</h1>");
+app.get("/api", (req, res) => {
+  res.send("<h1>Api is running!</h1>");
 });
 
-app.get("/movies", async (req, res) => {
+app.get("/api/movies", async (req, res) => {
   // const movies = [
   //   { _id: 1, title: "Movie1" },
   //   { _id: 2, title: "Movie2" },
@@ -32,7 +32,7 @@ app.get("/movies", async (req, res) => {
   res.send(movies);
 });
 
-app.post("/movies", async (req, res) => {
+app.post("/api/movies", async (req, res) => {
   if (!req.body.title) return res.status(400).send("Title is required.");
 
   const movie = new Movie({ title: req.body.title });
@@ -40,7 +40,7 @@ app.post("/movies", async (req, res) => {
   res.send(movie);
 });
 
-app.delete("/movies/:id", async (req, res) => {
+app.delete("/api/movies/:id", async (req, res) => {
   await Movie.deleteOne({ _id: req.params.id });
   res.status(204).send();
 });
