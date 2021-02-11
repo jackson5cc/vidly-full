@@ -48,6 +48,7 @@ environments:
     MONGODB_USER: vidly
     MONGODB_PASSWORD: Miroone$2098
 production:
+  variables:
     NODE_ENV: production 
     MONGODB_DB: vidly
     MONGODB_USER: vidly
