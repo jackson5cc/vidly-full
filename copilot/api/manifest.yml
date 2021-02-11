@@ -41,18 +41,18 @@ count: 1
 
 # You can override any of the values defined above by environment.
 environments:
- test:
-  variables:
-    NODE_ENV: test
-    MONGODB_DB: vidly-test
-    MONGODB_USER: vidly
-    MONGODB_PASSWORD: Miroone$2098
-production:
-  variables:
-    NODE_ENV: production 
-    MONGODB_DB: vidly
-    MONGODB_USER: vidly
-    MONGODB_PASSWORD: Miroone$2098
+  test:
+    variables:
+      NODE_ENV: test
+      MONGODB_DB: vidly-test
+      MONGODB_USER: vidly
+      MONGODB_PASSWORD: Miroone$2098
+  production:
+    variables:
+      NODE_ENV: production 
+      MONGODB_DB: vidly
+      MONGODB_USER: vidly
+      MONGODB_PASSWORD: Miroone$2098
 
   #  count: 2               # Number of tasks to run for the "test" environment.
 
