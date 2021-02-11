@@ -1,3 +1,3 @@
 module.exports = {
-  dbUri: "mongodb://db/vidly",
+  DB_URL: "mongodb://db/vidly",
 };

@@ -9,13 +9,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(config.get("dbUri"), {
+mongoose.connect(config.get("DB_URL"), {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
 const db = mongoose.connection;
 db.on("connected", () =>
-  console.log("Connected to MongoDB: " + config.get("dbUri"))
+  console.log("Connected to MongoDB: " + config.get("DB_URL"))
 );
 db.on("error", console.log);
 
