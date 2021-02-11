@@ -20,7 +20,7 @@ db.on("connected", () =>
 db.on("error", console.log);
 
 app.get("/api", (req, res) => {
-  res.send("<h1>Api is running!</h1>");
+  res.send("<h1>Api is running!!</h1>");
 });
 
 app.get("/api/movies", async (req, res) => {
