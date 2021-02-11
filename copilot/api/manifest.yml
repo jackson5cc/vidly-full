@@ -43,7 +43,12 @@ count: 1
 environments:
  test:
   variables:
-    NODE_ENV: production
+    NODE_ENV: test
+    MONGODB_DB: vidly-test
+    MONGODB_USER: vidly
+    MONGODB_PASSWORD: Miroone$2098
+production:
+    NODE_ENV: production 
     MONGODB_DB: vidly
     MONGODB_USER: vidly
     MONGODB_PASSWORD: Miroone$2098
