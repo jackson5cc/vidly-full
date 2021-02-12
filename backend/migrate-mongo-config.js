@@ -2,7 +2,7 @@ const config = require("config");
 
 module.exports = {
   mongodb: {
-    url: config.get("dbUri"),
+    url: config.get("DB_URL"),
 
     databaseName: "vidly",
 

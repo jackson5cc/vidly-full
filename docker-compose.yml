@@ -10,19 +10,30 @@ services:
     depends_on: 
       - db
     build: ./backend
+    image: vidly-backend 
     ports: 
       - 3001:3001
     volumes:
       - ./backend:/app
-    entrypoint: npm start 
-  frontend:
-    depends_on: 
+    entrypoint: npm start
+  backend-tests: 
+    depends_on:
       - backend
-    build: ./frontend
-    ports:
-      - 3000:3000
+    image: vidly-backend
     volumes:
-      - ./frontend:/app
-    entrypoint: yarn start 
+      - ./backend:/app
+    environment: 
+      NODE_ENV: development
+    entrypoint: npm test
+  # frontend:
+  #   depends_on: 
+  #     - backend
+  #   build: ./frontend
+  #   image: vidly-frontend
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - ./frontend:/app
+  #   entrypoint: yarn start 
 volumes:
   vidly:
