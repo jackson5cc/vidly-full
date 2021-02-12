@@ -28,8 +28,7 @@ stages:
       # Optional: use test commands to validate this stage of your build.
       test_commands: 
         - echo 'Running tests'
-        - ls
-        - npm test 
+        - npm --prefix backend test 
 
     - # The name of the environment to deploy to.
       name: production
