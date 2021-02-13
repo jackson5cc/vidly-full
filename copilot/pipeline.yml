@@ -30,6 +30,7 @@ stages:
         - echo 'Running tests'
         - ls
         - ls backend
+        - env
         - npm --prefix backend install
         - npm --prefix backend test 
 
