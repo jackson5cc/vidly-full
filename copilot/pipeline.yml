@@ -28,6 +28,7 @@ stages:
       # Optional: use test commands to validate this stage of your build.
       test_commands: 
         - echo 'Running tests'
+        - ls
         - ls backend
         - npm --prefix backend install
         - npm --prefix backend test 
