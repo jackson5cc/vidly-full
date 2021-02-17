@@ -9,8 +9,10 @@ const mockMovies = [
   { _id: 3, title: "Movie 3" },
 ];
 
+const apiEndpoint = "http://localhost:3001/movies";
+
 const server = setupServer(
-  rest.get("http://localhost:3001/movies", (req, res, ctx) => {
+  rest.get(apiEndpoint, (req, res, ctx) => {
     return res(ctx.json(mockMovies));
   })
 );
@@ -24,9 +26,16 @@ describe("App component", () => {
 
     await waitFor(() => screen.getAllByRole("listitem"));
 
-    const list = screen.getByRole("list");
-    const listItems = screen.getAllByRole("listitem");
-    expect(list).toBeInTheDocument();
-    expect(listItems.length).toEqual(mockMovies.length);
+    expect(screen.getByRole("list")).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem").length).toEqual(mockMovies.length);
+  });
+
+  test("displays an error if movies cannot be fetched", async () => {
+    server.use(rest.get(apiEndpoint, (req, res, ctx) => res(ctx.status(500))));
+
+    render(<App />);
+    await waitFor(() => screen.getByRole("alert"));
+
+    expect(screen.getByRole("alert")).toBeInTheDocument();
   });
 });

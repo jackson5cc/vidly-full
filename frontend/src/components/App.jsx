@@ -7,13 +7,14 @@ import "./App.css";
 function App() {
   const moviesEndpoint = "/movies";
   const [movies, setMovies] = useState([]);
+  const [error, setError] = useState();
 
   const fetchMovies = async () => {
     try {
       const { data } = await api.get(moviesEndpoint);
       setMovies(data);
     } catch (error) {
-      console.error(error);
+      setError("Could not fetch the movies!");
     }
   };
 
@@ -44,6 +45,11 @@ function App() {
   return (
     <div className="App">
       <MovieForm onAddMovie={handleAddMovie} />
+      {error && (
+        <p role="alert" className="Error">
+          {error}
+        </p>
+      )}
       <MovieList movies={movies} onDeleteMovie={handleDeleteMovie} />
     </div>
   );
