@@ -1,7 +1,7 @@
 import React from "react";
 import "./Input.css";
 
-function Input({ onChange, placeholder, value }) {
+function Input({ onChange, placeholder, value, ...props }) {
   return (
     <input
       onChange={onChange}
@@ -9,6 +9,7 @@ function Input({ onChange, placeholder, value }) {
       placeholder={placeholder}
       type="text"
       value={value}
+      {...props}
     />
   );
 }

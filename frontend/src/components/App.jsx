@@ -27,7 +27,7 @@ function App() {
 
       setMovies([...movies, savedMovie]);
     } catch (error) {
-      console.error(error);
+      setMovies(movies);
     }
   };
 

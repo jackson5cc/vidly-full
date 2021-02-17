@@ -18,6 +18,7 @@ function MovieForm({ onAddMovie }) {
   return (
     <form onSubmit={handleSubmit}>
       <Input
+        aria-label="New Movie"
         onChange={handleChange}
         placeholder="Add a new movie..."
         type="text"
