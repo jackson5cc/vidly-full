@@ -1,8 +1,8 @@
-const config = require("config");
+const db = require("./db");
 
 module.exports = {
   mongodb: {
-    url: config.get("DB_URL"),
+    url: db.url,
 
     databaseName: "vidly",
 

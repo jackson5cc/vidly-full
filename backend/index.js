@@ -1,11 +1,8 @@
-const config = require("config");
 const app = require("./app");
 const db = require("./db");
 
-console.log(config);
-
 db.connect().then(() => {
-  console.log("Connected to MongoDB: " + config.get("DB_URL"));
+  console.log("Connected to MongoDB: " + db.url);
 });
 
 const port = process.env.PORT || 3001;

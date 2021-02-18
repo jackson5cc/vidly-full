@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
-const config = require("config");
 
-const connect = () =>
-  mongoose.connect(config.get("DB_URL"), {
+const dbUrl = process.env.DB_URL || "mongodb://db/vidly";
+
+const connect = async () => {
+  await mongoose.connect(dbUrl, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   });
+  console.log("Connected to MongoDB: " + dbUrl);
+};
 
 const close = () => mongoose.connection.close();
 
-module.exports = { connect, close };
+module.exports = { connect, close, url: dbUrl };
