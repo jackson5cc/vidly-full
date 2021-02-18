@@ -2,7 +2,6 @@ import {
   fireEvent,
   render,
   screen,
-  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
@@ -22,7 +21,10 @@ const apiEndpoint = "http://localhost:3001/movies";
 
 const server = setupServer(
   rest.get(apiEndpoint, (req, res, ctx) => res(ctx.json(movies))),
-  rest.post(apiEndpoint, (req, res, ctx) => res(ctx.json(newMovie)))
+  rest.post(apiEndpoint, (req, res, ctx) => res(ctx.json(newMovie))),
+  rest.delete(apiEndpoint + "/" + movies[0]._id, (req, res, ctx) =>
+    res(ctx.status(204))
+  )
 );
 
 beforeAll(() => server.listen());
@@ -30,64 +32,119 @@ afterAll(() => server.close());
 afterEach(() => server.resetHandlers());
 
 describe("App component", () => {
-  test("renders the list of movies", async () => {
+  test("renders all the movies fetched from the server", async () => {
     render(<App />);
 
-    await waitFor(listItems);
+    const listItems = await screen.findAllByRole("listitem");
 
-    expect(listItems().length).toEqual(movies.length);
+    expect(listItems.length).toEqual(movies.length);
   });
 
-  test("displays an error if movies cannot be fetched", async () => {
+  test("displays an error if the call to the server fails", async () => {
     server.use(rest.get(apiEndpoint, (req, res, ctx) => res(ctx.status(500))));
 
     render(<App />);
-    await waitFor(error);
 
-    expect(error()).toBeInTheDocument();
+    await screen.findByRole("alert");
   });
 
-  test("clears the input field when a new movie is added", async () => {
-    await setMovieTitle();
+  describe("When a new movie is added", () => {
+    test("the input field gets cleared", async () => {
+      await renderApp();
 
-    submitForm();
+      addMovie();
+      await screen.findByText(newMovie.title);
 
-    expect(inputField()).toHaveValue("");
+      const inputField = screen.getByLabelText("New Movie");
+      expect(inputField).toHaveValue("");
+    });
+
+    test("it is added to the list", async () => {
+      await renderApp();
+
+      addMovie();
+
+      await screen.findByText(newMovie.title);
+    });
+
+    test("it is removed from the list if the call to the server fails", async () => {
+      server.use(
+        rest.post(apiEndpoint, (req, res, ctx) => res(ctx.status(500)))
+      );
+
+      await renderApp();
+
+      addMovie();
+
+      await waitForElementToBeRemoved(() => screen.queryByText(newMovie.title));
+    });
+
+    test("An error is displayed if the call to the server fails", async () => {
+      server.use(
+        rest.post(apiEndpoint, (req, res, ctx) => res(ctx.status(500)))
+      );
+
+      await renderApp();
+
+      addMovie();
+
+      const error = await screen.findByRole("alert");
+      expect(error).toHaveTextContent(/save/i);
+    });
   });
 
-  test("adds the new movie to the list when form submitted", async () => {
-    await setMovieTitle();
+  describe("When a movie is deleted", () => {
+    test("it is removed from the list", async () => {
+      await renderApp();
 
-    submitForm();
+      deleteMovie();
 
-    expect(listItems().length).toEqual(movies.length + 1);
-  });
+      expect(screen.queryByText(movies[0].title)).not.toBeInTheDocument();
+    });
 
-  test("removes the new movie from the list if it cannot be saved", async () => {
-    server.use(rest.post(apiEndpoint, (req, res, ctx) => res(ctx.status(500))));
-    await setMovieTitle();
+    test("it is inserted back in the list if the call to the server fails", async () => {
+      server.use(
+        rest.delete(apiEndpoint + "/" + movies[0]._id, (req, res, ctx) =>
+          res(ctx.status(500))
+        )
+      );
 
-    submitForm();
-    await waitForElementToBeRemoved(() => screen.queryByText(newMovie.title));
+      await renderApp();
 
-    expect(listItems().length).toEqual(movies.length);
+      deleteMovie();
+
+      await screen.findByText(movies[0].title);
+    });
+
+    test("an error is displayed if the call to the server fails", async () => {
+      server.use(
+        rest.delete(apiEndpoint + "/" + movies[0]._id, (req, res, ctx) =>
+          res(ctx.status(500))
+        )
+      );
+
+      await renderApp();
+
+      deleteMovie();
+
+      const error = await screen.findByRole("alert");
+      expect(error).toHaveTextContent(/delete/i);
+    });
   });
 });
 
-const setMovieTitle = async () => {
+// Helper functions
+const renderApp = async () => {
   render(<App />);
-  await waitFor(listItems);
+  await screen.findAllByRole("listitem");
+};
 
-  fireEvent.change(inputField(), {
+const addMovie = () => {
+  const inputField = screen.getByLabelText("New Movie");
+  fireEvent.change(inputField, {
     target: { value: newMovie.title },
   });
+  fireEvent.submit(inputField);
 };
 
-const submitForm = () => {
-  fireEvent.submit(inputField());
-};
-
-// Query functions
-const inputField = () => screen.getByLabelText("New Movie");
-const listItems = () => screen.getAllByRole("listitem");
-const error = () => screen.getByRole("alert");
+const deleteMovie = () => fireEvent.click(screen.getAllByRole("button")[0]);

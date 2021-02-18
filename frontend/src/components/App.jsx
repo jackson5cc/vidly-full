@@ -27,6 +27,7 @@ function App() {
 
       setMovies([...movies, savedMovie]);
     } catch (error) {
+      setError("Could not save the movie!");
       setMovies(movies);
     }
   };
@@ -36,7 +37,8 @@ function App() {
       setMovies(movies.filter((m) => m !== movie));
       await api.remove(moviesEndpoint + "/" + movie._id);
     } catch (error) {
-      console.error(error);
+      setError("Could not delete the movie!");
+      setMovies(movies);
     }
   };
 
