@@ -8,7 +8,7 @@
     "start": "nodemon --ignore './tests' index.js",
     "start:prod": "npm run db:up && node index.js",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll --colors"
   },
   "keywords": [],
   "author": "",
