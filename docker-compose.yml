@@ -25,15 +25,24 @@ services:
     environment: 
       NODE_ENV: development
     entrypoint: npm run test:watch
-  # frontend:
-  #   depends_on: 
-  #     - backend
-  #   build: ./frontend
-  #   image: vidly-frontend
-  #   ports:
-  #     - 3000:3000
-  #   volumes:
-  #     - ./frontend:/app
-  #   entrypoint: yarn start 
+  frontend:
+    depends_on: 
+      - backend
+    build: ./frontend
+    image: vidly-frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+    entrypoint: yarn start 
+  frontend-tests: 
+    depends_on:
+      - frontend
+    image: vidly-frontend
+    volumes:
+      - ./frontend:/app
+    # environment: 
+    #   NODE_ENV: development
+    entrypoint: npm test    
 volumes:
   vidly:
