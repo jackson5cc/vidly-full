@@ -5,4 +5,6 @@ jobs:
       - image: circleci/node
     steps:
       - checkout 
-      - run echo 'Successfully checked out'
+      - run:
+          name: Echo Hello World
+          command: echo hello world
