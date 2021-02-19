@@ -8,3 +8,7 @@ jobs:
       - run:
           name: Echo Hello World
           command: echo hello world
+      - run:
+          name: ls
+          command: ls
+      
