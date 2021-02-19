@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node
     working_directory: ~/vidly-full/backend 
     environment:
-      DB_URL: $DB_URL
+      DB_URL: mongodb+srv://vidly:Miroone$2098@cluster0.oyurd.mongodb.net/vidly-test?retryWrites=true&w=majority
     steps:
       - checkout:
           path: ~/vidly-full
