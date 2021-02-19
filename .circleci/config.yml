@@ -2,6 +2,12 @@ version: 2.1
 orbs:
   node: circleci/node@3.0.0
 workflows:
-  node-tests:
+  first-workflow:
     jobs:
-      - node/test
+      backend:
+        docker:
+          - image: circleci/node
+        steps:
+          - checkout
+          - run: cd web && npm install
+          - run: cd web && npm test
