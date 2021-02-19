@@ -3,12 +3,17 @@ jobs:
   build:
     docker:
       - image: circleci/node
+    working_directory: ~/vidly-full/backend 
     steps:
-      - checkout 
+      - checkout:
+          path: ~/vidly-full
       - run:
           name: Echo Hello World
           command: echo hello world
       - run:
           name: ls
           command: ls
+      - run:
+          name: pwd
+          command: pwd
       
