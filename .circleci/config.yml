@@ -17,5 +17,5 @@ jobs:
           name: Run tests
           command: npm test
       - store_test_results:
-          path: test-results
+          path: test-result.json
       
