@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  db:
+    image: "mongo:4.0-xenial"
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+  backend: 
+    depends_on: 
+      - db
+    build: ./backend
+    image: vidly-backend 
+    ports: 
+      - 3001:3001
+    entrypoint: npm start
+  frontend:
+    depends_on: 
+      - backend
+    build: ./frontend
+    image: vidly-frontend
+    ports:
+      - 3000:3000
+    environment: 
+      REACT_APP_API_URL: http://167.71.88.39:3001/api
+    entrypoint: yarn start 
+volumes:
+  vidly:
