@@ -13,7 +13,7 @@ services:
     image: vidly-backend 
     ports: 
       - 3001:3001
-    entrypoint: npm start
+    entrypoint: ["sh", "./docker-entrypoint.sh"]
   frontend:
     depends_on: 
       - backend
@@ -22,7 +22,7 @@ services:
     ports:
       - 3000:3000
     environment: 
-      REACT_APP_API_URL: http://167.71.88.39:3001/api
+      REACT_APP_API_URL: http://143.198.21.26:3001/api
     entrypoint: yarn start 
 volumes:
   vidly:
