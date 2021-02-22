@@ -16,5 +16,8 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+      - run: 
+          name: SSH to DigitalOcean 
+          command: ssh root@143.198.21.26
       
       
