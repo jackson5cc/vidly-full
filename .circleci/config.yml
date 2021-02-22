@@ -3,22 +3,25 @@ jobs:
   build:
     docker:
       - image: circleci/node
-    working_directory: ~/vidly-full/backend 
+    # working_directory: ~/vidly-full/backend 
     steps:
       - checkout:
           path: ~/vidly-full
       - run:
-          name: Echo Hello World
-          command: echo hello world
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Run tests
-          command: npm test
-      - run:
           name: Run ls
           command: ls
+      - run:
+          name: Install backend dependencies
+          command: npm install --prefix backend 
+      - run:
+          name: Run backend tests
+          command: npm test --prefix backend 
+      # - run:
+      #     name: Install frontend dependencies
+      #     command: npm install --prefix frontend 
+      # - run:
+      #     name: Run frontend tests
+      #     command: npm test --prefix frontend 
       - run: 
           name: SSH to DigitalOcean 
           command: ssh -oStrictHostKeyChecking=no root@143.198.21.26 "./deploy.sh"
