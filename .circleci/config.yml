@@ -16,6 +16,9 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+      - run:
+          name: Run ls
+          command: ls
       - run: 
           name: SSH to DigitalOcean 
           command: ssh -oStrictHostKeyChecking=no root@143.198.21.26 "./deploy.sh"
