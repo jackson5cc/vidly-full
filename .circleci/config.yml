@@ -3,10 +3,10 @@ jobs:
   build:
     docker:
       - image: circleci/node
-    # working_directory: ~/vidly-full/backend 
+    # working_directory: ~/vidly-full
     steps:
-      - checkout:
-          path: ~/vidly-full
+      - checkout
+          # path: ~/vidly-full
       - run:
           name: Run ls
           command: ls
