@@ -15,7 +15,8 @@ services:
       - 3001:3001
     volumes:
       - ./backend:/app
-    entrypoint: npm start
+    # entrypoint: npm start
+    command: ["./wait-for", "db:27017", "--", "npm", "start"]
   backend-tests: 
     depends_on:
       - backend

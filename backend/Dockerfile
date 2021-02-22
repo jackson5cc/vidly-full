@@ -3,6 +3,7 @@ WORKDIR /app
 COPY package*.json ./ 
 RUN npm install 
 COPY . . 
+RUN chmod +x ./wait-for
 # RUN chmod +x /docker-entrypoint.sh
 EXPOSE 3001 
-ENTRYPOINT [ "node", "index.js" ]
+CMD [ "node", "index.js" ]
