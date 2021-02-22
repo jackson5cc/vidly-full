@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  backend: 
+    image: codecast/vidly-backend
+    ports: 
+      - 3001:3001
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s # wait 5s between each restart
+        max_attempts: 3
+        window: 120s # wait up to 120s to decide if the restart worked
+
+  frontend:
+    image: codecast/vidly-frontend
+    ports:
+      - 3000:3000
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s # wait 5s between each restart
+        max_attempts: 3
+        window: 120s # wait up to 120s to decide if the restart worked
+  # db:
+  #   image: "mongo:3-xenial"
+  #   container_name: vidly_db
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - vidly:/data/db
+volumes:
+  vidly:
