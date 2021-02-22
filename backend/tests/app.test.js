@@ -52,7 +52,7 @@ describe(endpoint, () => {
       expect(res.body.title).toBe(movie.title);
       expect(res.body._id).toBeTruthy();
 
-      Movie.findByIdAndDelete(res.body._id);
+      await Movie.findByIdAndDelete(res.body._id);
     });
   });
 
