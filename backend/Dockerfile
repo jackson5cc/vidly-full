@@ -4,6 +4,6 @@ COPY package*.json ./
 RUN npm install 
 COPY . . 
 RUN chmod +x ./wait-for
-# RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh
 EXPOSE 3001 
 CMD [ "node", "index.js" ]
