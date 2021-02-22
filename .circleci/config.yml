@@ -18,6 +18,6 @@ jobs:
           command: npm test
       - run: 
           name: SSH to DigitalOcean 
-          command: ssh -oStrictHostKeyChecking=no root@143.198.21.26
+          command: ssh -oStrictHostKeyChecking=no root@143.198.21.26 "./deploy.sh"
       
       
