@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   db:
     image: "mongo:4.0-xenial"
@@ -6,6 +7,7 @@ services:
       - 27017:27017
     volumes:
       - vidly:/data/db
+
   backend: 
     depends_on: 
       - db
@@ -15,7 +17,10 @@ services:
       - 3001:3001
     volumes:
       - ./backend:/app
+    environment: 
+      DB_URL: mongodb://db/vidly
     entrypoint: ["sh", "./docker-entrypoint.sh"]
+
   backend-tests: 
     depends_on:
       - backend
@@ -25,6 +30,7 @@ services:
     environment: 
       NODE_ENV: development
     entrypoint: npm run test:watch
+
   frontend:
     depends_on: 
       - backend
@@ -34,7 +40,10 @@ services:
       - 3000:3000
     volumes:
       - ./frontend:/app
+    environment: 
+      REACT_APP_API_URL: http://backend:3001/api
     entrypoint: yarn start 
+
   frontend-tests: 
     depends_on:
       - frontend
@@ -44,5 +53,6 @@ services:
     # environment: 
     #   NODE_ENV: development
     entrypoint: npm test    
+
 volumes:
   vidly:
