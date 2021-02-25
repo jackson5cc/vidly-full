@@ -1,19 +1,5 @@
 version: "3.8"
 services:
-  db:
-    image: mongo:4.0-xenial
-    ports:
-      - 27017:27017
-    volumes:
-      - vidly:/data/db
-  backend: 
-    depends_on: 
-      - db
-    build: ./backend
-    image: vidly-backend 
-    ports: 
-      - 3001:3001
-    entrypoint: ["sh", "./docker-entrypoint.sh"]
   frontend:
     depends_on: 
       - backend
@@ -24,5 +10,22 @@ services:
     environment: 
       REACT_APP_API_URL: http://143.198.21.26:3001/api
     entrypoint: yarn start 
+
+  backend: 
+    depends_on: 
+      - db
+    build: ./backend
+    image: vidly-backend 
+    ports: 
+      - 3001:3001
+    entrypoint: ["sh", "./docker-entrypoint.sh"]
+    
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+  
 volumes:
   vidly:

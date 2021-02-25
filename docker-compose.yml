@@ -1,12 +1,18 @@
 version: "3.9"
 
 services:
-  db:
-    image: mongo:4.0-xenial
+  frontend:
+    depends_on: 
+      - backend
+    build: ./frontend
+    image: vidly-frontend
     ports:
-      - 27017:27017
+      - 3000:3000
     volumes:
-      - vidly:/data/db
+      - ./frontend:/app
+    environment: 
+      REACT_APP_API_URL: http://backend:3001/api
+    entrypoint: yarn start 
 
   backend: 
     depends_on: 
@@ -21,6 +27,13 @@ services:
       DB_URL: mongodb://db/vidly
     entrypoint: ["sh", "./docker-entrypoint.sh"]
 
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
   backend-tests: 
     depends_on:
       - backend
@@ -30,19 +43,6 @@ services:
     environment: 
       NODE_ENV: development
     entrypoint: npm run test:watch
-
-  frontend:
-    depends_on: 
-      - backend
-    build: ./frontend
-    image: vidly-frontend
-    ports:
-      - 3000:3000
-    volumes:
-      - ./frontend:/app
-    environment: 
-      REACT_APP_API_URL: http://backend:3001/api
-    entrypoint: yarn start 
 
   frontend-tests: 
     depends_on:
